@@ -184,6 +184,33 @@ def Waiter():
 MangerOrWaiter()
 
 
+فادي انسخ بعد هادا السطر وشوف كيف البداية 
+
+def welcome():
+    a = int(input("\nWelcome to ABC Resturant \n1- Manager\n2- Waiter\n3- Exit\nSelect your Role(1-3): "))
+    return a
+def manager():
+    a = int(input("\n=====================\nManager Options\n=====================\n\n1- Manage Waiters\n2- Manage Food Manu\n"
+                  "3- View Orders\n4- BACK\nSelect your Role(1-4): "))
+    return a
+def waiter():
+    a = input("\nEnter username: ")
+    if a in usernames :
+        b = input("Waiter Options ("+usernames[a]+")\n1- Select Food\n2- Check List ("+str(len(foodList))+")\n3- Save Order\n4- BACK\nSelect your Role(1-4): ")
+
+
+foodList = []
+usernames = {"abuwarda":"ahmed abuwarda"}
+a = welcome()
+if a == 1:
+    a = manager()
+elif a == 2 :
+    a = waiter()
+elif a == 3 :
+    exit()
+else:
+    a = welcome()
+
 
 
 
