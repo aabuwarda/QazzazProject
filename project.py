@@ -1,11 +1,17 @@
 import os
 import sys
 import fileinput
+global menudect
+global fooddect
+global waiterlist
+#----start code
+#--------------------------------------start Manage Or Waiter options
 def MangerOrWaiter():
     print("Welcome to ABC Restaurant\n1- Manger\n2 -Waiter\n3- EXIT\n")
     MOW_input = int(input("Select your Role (1-3): "))
     if MOW_input < 0 or MOW_input > 3:
         print("Error input")
+        MangerOrWaiter()
     elif MOW_input==1:
         MangerOptions()
     elif MOW_input==2:
@@ -14,12 +20,16 @@ def MangerOrWaiter():
         exit()
     else:
         print("Error input")
+        MangerOrWaiter()
+#--------------------------------------End Manage Or Waiter options
 
+#---------------------------------------------Start Manger Options
 def MangerOptions():
     print("========================\nManger Options\n========================\n1- Manage Waiters\n2- Manage Food Menu\n3- Veiw Orders\n4- BACK\n")
     MO_input = int(input("Select Option (1-4): "))
     if MO_input < 0 or MO_input > 4:
         print("Error input")
+        MangerOptions()
     elif MO_input==1:
         ManageWaiter()
     elif MO_input==2:
@@ -35,13 +45,18 @@ def MangerOptions():
         MangerOrWaiter()
     else:
         print("Error input")
+        MangerOptions()
+#---------------------------------------------End Manger Options
+
 #---------------------------------------------Start Manage Waiter-----------------------------------------------------#
 def ManageWaiter():
     print("========================\nManage Waiter\n========================\n1- Add New Waiter\n2- Edit Existing Waiter\n3- Delete Waiter\n4- BACK\n")
     MW_input = int(input("Enter your choice: "))
     if MW_input < 0 or MW_input > 4:
         print("Error input")
+        ManageWaiter()
     elif MW_input==1:
+#-----------------------Start Add New waiter
         print("## New Waiter ##")
         def AddNewWaiter():
          line=input("Enter New Waiter name: ")
@@ -60,20 +75,16 @@ def ManageWaiter():
              elif AddWaiterOption == "2":
                  ManageWaiter()
         AddNewWaiter()
-
+# -----------------------End Add New waiter
     elif MW_input==2:
+# -----------------------Start Edit Existing waiter
         print("###Edit Existing Waiter###")
         def EditNewWaiter():
             fwaiters = open('waiters.txt', 'a')
-            print("Enter the Waiter you want to Edit: ")
-            WaiterToSearch = input("> ")
-
-            print("Enter the New Waiter: ")
-            WaiterToReplace = input("> ")
+            WaiterToSearch = input("Enter the Waiter you want to Edit: ")
+            WaiterToReplace = input("Enter the New Waiter: ")
             path = 'waiters.txt'
-
             tempFile = open(path, 'r+')
-
             for line in fileinput.input(path):
                 if WaiterToSearch in line:
                     print(WaiterToSearch, ' successfully replaced to', WaiterToReplace)
@@ -86,9 +97,12 @@ def ManageWaiter():
                 EditNewWaiter()
             elif EditWaiterOption == "2":
                 ManageWaiter()
+            else:
+                ManageWaiter()
         EditNewWaiter()
-
+# -----------------------End Edit Existing waiter
     elif MW_input==3:
+# -----------------------start delete waiter
         print("###Delete Waiter###")
         def delWaiters():
             delWaiter = input("Enter Waiter name to delete:")
@@ -112,10 +126,12 @@ def ManageWaiter():
                 delWaiters()
 
         delWaiters()
+# -----------------------End delete waiter
     elif MW_input==4:
         MangerOptions()
     else:
         print("Error input")
+        ManageWaiter()
 #---------------------------------------------End Manage Waiter-----------------------------------------------------#
 
 #---------------------------------------------Start Manage Food-----------------------------------------------------#
@@ -132,6 +148,7 @@ def ManageFood():
         MangerOptions()
     else:
         print("Error input")
+        ManageFood()
 #---------------------------------------------End Manage Food-----------------------------------------------------#
 
 #---------------------------------------------Start Manage Menus-----------------------------------------------------#
@@ -143,10 +160,81 @@ def ManageMenus():
         ManageMenus()
     elif MM_input == 1:
         print("add New Menus")
+        def AddNewMenus():
+         line=input("Enter New Menus name: ")
+         Menus = set()
+         if line not in Menus:
+             fMenus = open('menus.txt', 'a')
+             fMenus.write(line + '\n')
+             Menus.add(line)
+             fMenus.close()
+             print(line,"successfully added !")
+             print("1-add more")
+             print("2-BACK")
+             AddWaiterOption = input(":")
+             if AddWaiterOption == "1":
+                 AddNewMenus()
+             elif AddWaiterOption == "2":
+                 ManageFood()
+        AddNewMenus()
     elif MM_input == 2:
-        print("Delete Menus")
+        print("Edit Existing Menus")
+        def EditNewMenus():
+            fMenus = open('menus.txt', 'a')
+            print("Enter the Waiter you want to Edit: ")
+            MenusToSearch = input("> ")
+            print("Enter the New Waiter: ")
+            MenusToReplace = input("> ")
+            path = 'menus.txt'
+            tempFile = open(path, 'r+')
+            for line in fileinput.input(path):
+                if MenusToSearch in line:
+                    print(MenusToSearch, ' successfully replaced to', MenusToReplace)
+                else:
+                    print("Error, try again!")
+                    EditNewMenus()
+                tempFile.write(line.replace(MenusToSearch, MenusToReplace))
+
+            tempFile.close()
+            print("1-Edit more")
+            print("2-BACK")
+            EditMenusOption = input(":")
+            if EditMenusOption == "1":
+                EditNewMenus()
+            elif EditMenusOption == "2":
+                ManageFood()
+            else:
+                print("Error input, Try again")
+                ManageMenus()
+        EditNewMenus()
+
     elif MM_input == 3:
         print("Delete Menus")
+        def delMenus():
+            delMenus = input("Enter Menus name to delete:")
+            if delMenus != "" and " ":
+                with open('menus.txt', 'r') as infile:
+                    newlist = [i for i in infile.read().split() if i != delMenus]
+                with open('menus.txt', 'w') as outfile:
+                    outfile.write("\n".join(newlist))
+                print(delMenus, "successfully deleted!")
+                infile.close()
+                outfile.close()
+                print("1-delete more")
+                print("2-BACK")
+                delMenusOption = input(":")
+                if delMenusOption == "1":
+                    delMenus()
+                elif delMenusOption == "2":
+                    ManageMenus()
+                else:
+                    print("Error input, Try again")
+                    ManageMenus()
+            else:
+                print("Error input")
+                delMenus()
+        delMenus()
+
     elif MM_input ==4:
         ManageFood()
     else:
@@ -160,27 +248,116 @@ def ManageFoodMenu():
     MFM_input = int(input("Enter your choice: "))
     if MFM_input < 0 or MFM_input > 4:
         print("Error input")
+        ManageFoodMenu()
     elif MFM_input == 1:
-        print("Add New Food")
+        print("## Add New Food ##")
+        def AddNewFood():
+            print("Menu :")
+            menudect = {}
+            with open("menus.txt") as menufile:
+                for menus in menufile:
+                    (key, val) = menus.split()
+                    menudect[str(key)] = val
+                    print(str(key) + "." + menudect[str(key)])
+            Foodname = input("Enter Food name: ")
+            foodprice= input("Enter Food Price: ")
+            Food = set()
+            if Foodname not in Food:
+                fFood = open('food.txt', 'a')
+                fFood.write(Foodname +" "+foodprice+ '\n')
+                Food.add(Foodname +" "+foodprice+ '\n')
+                fFood.close()
+                print(Foodname, "successfully added !")
+                print("1-add more")
+                print("2-BACK")
+                AddFoodOption = input(":")
+                if AddFoodOption == "1":
+                    AddNewFood()
+                elif AddFoodOption == "2":
+                    ManageFood()
+                else:
+                    print("Error input, try again")
+                    ManageFood()
+
+        AddNewFood()
 
     elif MFM_input == 2:
         print("edit Existing Food")
+        def EditNewFood():
+            fFood = open('food.txt', 'a')
+            FoodToSearch = input("Enter the Food you want to Edit: ")
+            FoodToReplace = input("Enter the New Food: ")
+            path = 'food.txt'
+            tempFile = open(path, 'r+')
+            for line in fileinput.input(path):
+                if FoodToSearch in line:
+                    print(FoodToSearch, ' successfully replaced to', FoodToReplace)
+                tempFile.write(line.replace(FoodToSearch, FoodToReplace))
+            tempFile.close()
+            print("1-Edit more")
+            print("2-BACK")
+            EditFoodOption = input(":")
+            if EditFoodOption == "1":
+                EditNewFood()
+            elif EditFoodOption == "2":
+                ManageFood()
+        EditNewFood()
     elif MFM_input == 3:
         print("Delete Food")
+        def delFood():
+            delFood = input("Enter Menus name to delete:")
+            if delFood != "" and " ":
+                with open('food.txt', 'r') as infile:
+                    newlist = [i for i in infile.read().split() if i != delFood()]
+                with open('food.txt', 'w') as outfile:
+                    outfile.write("\n".join(newlist))
+                print(delFood, "successfully deleted!")
+                infile.close()
+                outfile.close()
+                print("1-delete more")
+                print("2-BACK")
+                delFoodOption = input(":")
+                if delFoodOption == "1":
+                    delFood()
+                elif delFoodOption == "2":
+                    ManageFood()
+            else:
+                print("Error input")
+                delFood()
+        delFood()
     elif MFM_input == 4:
         ManageFood()
     else:
         print("Error input")
+
 #---------------------------------------------End Manage Food Menus-----------------------------------------------------#
+#---------------------------------------------Start Waiter--------------------------------------------------------------#
 def Waiter():
-    print("Soon -- Waiter")
     waiter_username=input("Enter username: ")
     if waiter_username in open('waiters.txt').read():
         print("Waiter Options "+"(",waiter_username,")")
     else:
-        print("Username doesn't exist")
+        print("Username doesn't exist\ntry again!")
         Waiter()
+# ---------------------------------------------End Waiter--------------------------------------------------------------#
 
+#----------------------read a File and convert to list and dect
+menudect = {}
+with open("menus.txt") as menufile:
+    for menus in menufile:
+       (mkey, mval) = menus.split()
+       menudect[str(mkey)] = mval
+fooddect = {}
+with open("food.txt") as menufile:
+    for menus in menufile:
+       (fkey, fval) = menus.split()
+       fooddect[str(fkey)] = fval
+waiterlist = []
+with open("waiters.txt") as waiterfile:
+    for waiter in waiterfile:
+       (waiternames) = waiter.split()
+       waiterlist += waiternames
+#-----------------------------------------------------------------
 MangerOrWaiter()
 
 
