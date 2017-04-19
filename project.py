@@ -1,4 +1,5 @@
 import fileinput
+global menudect
 #----start code
 #--------------------------------------start Manage Or Waiter options
 def MangerOrWaiter():
