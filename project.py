@@ -1,7 +1,4 @@
 import fileinput
-global menudect
-global fooddect
-global waiterlist
 #----start code
 #--------------------------------------start Manage Or Waiter options
 def MangerOrWaiter():
@@ -12,7 +9,7 @@ def MangerOrWaiter():
     elif MOW_input=="2":
         Waiter()
     elif MOW_input=="3":
-        sureExit=input("press any key to exit ,press n to back.")
+        sureExit=input("press ENTER to exit ,Enter n to back.")
         if sureExit=="n":
             MangerOrWaiter()
         else:
@@ -151,15 +148,19 @@ def ManageMenus():
     if MM_input == "1":
         print("add New Menus")
         def AddNewMenus():
-
-         line=input("Enter New Menus name: ")
-         Menus = set()
-         if line not in Menus:
+         typech = 97
+         while (typech < 123):
+           line=input("Enter New Menus name: ")
+           Menus = set()
+           if line not in Menus:
              fMenus = open('menus.txt', 'a')
              fMenus.write(line + '\n')
+             print(typech)
              Menus.add(line)
              fMenus.close()
              print(line,"successfully added !")
+             typech = typech + 1
+             print(typech)
              print("1-add more")
              print("2-BACK")
              AddWaiterOption = input(":")
