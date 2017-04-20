@@ -157,7 +157,13 @@ def ManageMenus():
     if MM_input == "1":
         print("## add New Menus ##")
         def AddNewMenus():
-            ascii = 97
+            frMenus = open('menus.txt', 'r')
+            count = 0
+            while line1 != "":
+                line1 = frMenus.readline()
+                count += 1
+                
+            ascii = count
             while True:
                 v = chr(ascii)
                 line = input("Enter New Menus name (Enter 1 to back): ")
